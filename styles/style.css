@@ -1,0 +1,163 @@
+footer {
+    position: sticky;
+    text-align: center;
+    font-style: italic;
+    font-family: cursive;
+    bottom: 0;
+}
+
+#copyright{                 
+    transition: transform 50s ease-in-out;
+}
+
+#copyright:hover {
+    transform: rotateY(-36000deg);
+   
+}
+
+body{
+    background-color: #f4d292;
+    font-family: cursive;
+    font-size: 24px;
+}
+
+h1{
+    text-align: center;
+    text-decoration: underline;
+    font-size: 48px;
+}
+
+h2{
+    text-decoration: underline;
+    font-size: 24px;
+}
+
+div{
+    padding: 50px;
+
+}
+
+ul{
+    padding-left: 50px;
+}
+
+button{
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    margin-left: 47%;
+
+}
+
+#home{
+    display: block;
+}
+
+#mathTab{
+    padding-left: 750px;
+}
+
+#homediv{
+    padding-left: 500px;
+}
+
+#chessboard{
+    border: 2px solid;
+    text-align: center;
+    margin-left: 500px;
+    border-collapse: collapse;
+}
+
+#chessboard tr:nth-child(even) td:nth-child(even), #chessboard tr:nth-child(odd) td:nth-child(odd) {
+    background: #a68a64;
+}
+
+#chessboard tr:nth-child(odd) td:nth-child(even), #chessboard tr:nth-child(even) td:nth-child(odd) {
+    background: #582f0e;
+}
+
+.square{
+    height: 80px;
+    width: 80px;
+}
+
+.right{
+    background-color: #83623e;
+    border: 2px solid;
+    height: 80px;
+    width: 40px;
+}
+
+.bottom{
+    background-color: #83623e;
+    border: 2px solid;
+    height: 40px;
+    width: 80px;
+}
+
+.corner{
+    background-color: #83623e;
+    height: 40px;
+    width: 40px;
+}
+
+#SimonStart{
+    margin: 0;
+    background-color: darkgoldenrod;
+    height: 200px;
+    width: 500px;
+}
+
+#MineField{
+    padding-top: 50px;
+    margin-left: 40% ;
+    max-width: 12%;
+}
+
+#MineTab tr, #MineTab td{
+    height: 35px;
+    width: 35px;
+    color: #582f0e;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.MineBut{
+    margin: 0;
+    height: 35px;
+    width: 35px;
+
+}
+
+#MineStart{
+    height: 10%;
+    width: 60%;
+    margin-left: 20%;
+}
+
+#outerMine{
+    display: table;
+    padding: 0px;
+}
+.MineCol{
+    padding: 20px;
+    font-size: 8px;
+    border: 1px solid;
+    height: 10px;
+    width: 10px;
+    display: table-cell;
+}
+#MineH1{
+    border-bottom: 100px;
+    padding-bottom: 100px;
+}
+
+.MineRows{
+    display: table-row;
+}
+
+.hideMe{
+    border-color: aqua;
+}
+
+
