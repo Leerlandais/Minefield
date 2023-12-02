@@ -79,22 +79,18 @@ document.getElementById("outerMine").addEventListener("click", function(event) {
         console.log("dead");
         document.getElementById(butClick).textContent = "KABOOOOOOM";
         document.getElementById(butClick).style.backgroundColor = "red";
- //       NewGame();
+        document.getElementById("MineRestart").innerHTML = "You died. Click <span id='MineReload'>here</span> to try again"
+        document.getElementById("MineStart").disabled = true;
+        document.getElementById("MineReload").addEventListener("click", GameReload);
     }
     
 }
 });
-/*
-function NewGame(){
-    setTimeout(NewGame, 1000);
-    if (confirm("Sorry, you're dead") === true){
-        location.reload();
-    }
-    else{
-        location.reload();
-    }
+
+function GameReload(){
+    location.reload();
 }
-*/
+
 
 });
 
