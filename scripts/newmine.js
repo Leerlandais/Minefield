@@ -8,12 +8,17 @@ var bombSigns = [];       // this one takes care of the squares that will hold t
 document.getElementById("MineStart").onclick = setBombs;          // starts everything
 
 function setBombs () {
-    var bombReset = document.getElementsByClassName("MineCol");   // first off, reset the colours of everything 
-            for (let i = 0;i < bombReset.length; i++){                // by cycling through the grid 
-            bombReset[i].style.backgroundColor = "";              // and changing it back to default
-            
+
+    for (var i = 0; i < gridPos.length; i++ ){
+        document.getElementById(gridPos[i]).textContent = "0"; 
+    }
+
+    var bombReset = document.getElementsByClassName("MineCol");         // first off, reset the colours of everything 
+            for (let i = 0;i < bombReset.length; i++){                  // by cycling through the grid 
+            bombReset[i].style.backgroundColor = "";                    // and changing it back to default
+            bombHint[i] = 0;                                            // resets bombHint to 0 to prevent stacking 
         }
-     hereBombHere = [];                                           // makes sure the array for bomb position is empty
+        hereBombHere = [];                                           // makes sure the array for bomb position is empty
 
      const hasBomb = new Set();                                   // this one took a while to figure out. My older code was producing non-unique positions. Lots of digging unearthed 'new Set()' which I need to look into more cos I don't really understand it but it works 
      const notHere = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 10, 20, 30, 40, 50, 60, 70, 80, 19, 29, 39, 49, 59, 69, 79, 89]); // sloppy but this is a list of numbers I don't want (the outer edges of the grid)
@@ -30,7 +35,7 @@ function setBombs () {
     for (var i = 0; i < hereBombHere.length; i++){                // Start placing bombs. I deliberately set up everything so that I can eventually add an option for grid size/difficulty
         var bombSpot = hereBombHere[i];                           // adds each position to a variable on each cycle
         var bombPlace = gridPos[bombSpot];                        // each time it finds a bomb it marks the spot in an array
-        document.getElementById(bombPlace).style.backgroundColor = "red";   // and finally, it runs through that and makes things red
+        document.getElementById(bombPlace).style.backgroundColor = "#f4d292";   // and finally, it runs through that and makes things red
         
     }
 
@@ -65,14 +70,38 @@ function setBombs () {
               }
 }
 
-
-
+document.getElementById("outerMine").addEventListener("click", function(event) {
+    if (event.target.classList.contains("MineCol")) {
+        var butClick = event.target.id
+       console.log("clicked", butClick);
+       document.getElementById(butClick).style.color = "black";
+       if(document.getElementById(butClick).textContent > 8){
+        console.log("dead");
+        document.getElementById(butClick).textContent = "KABOOOOOOM";
+        document.getElementById(butClick).style.backgroundColor = "red";
+ //       NewGame();
+    }
+    
+}
+});
+/*
+function NewGame(){
+    setTimeout(NewGame, 1000);
+    if (confirm("Sorry, you're dead") === true){
+        location.reload();
+    }
+    else{
+        location.reload();
+    }
+}
+*/
 
 });
 
-// For tomorrow, a big job. Figure out how to limit the bomb placement to the inner 8*8 grid
+// for tomorrow: Hide buttons that aren't visible to player
+// accept player input and change relevant display
+// find a way to auto-empty logically empty squares
 
-// idea...create a const notHere = new Set() to refuse the 36 outer blocks
 
 
        

@@ -142,10 +142,13 @@ button{
 .MineCol{
     padding: 20px;
     font-size: 8px;
-    border: 1px solid;
+    border: 1px solid black;
     height: 10px;
     width: 10px;
     display: table-cell;
+    background-color: #f4d292;
+    color: #f4d292; 
+    
 }
 #MineH1{
     border-bottom: 100px;
@@ -157,7 +160,10 @@ button{
 }
 
 .hideMe{
-    border-color: aqua;
+    color: black;
+    background-color: black;
 }
+
+
 
 
