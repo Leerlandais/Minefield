@@ -4,7 +4,7 @@ var gridPos = ["a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "a10", "b1"
 var bombHint = new Array(100).fill(0);                              // and again here "Please make me an array with 100 zeros in it.... just the actual array so that I don't have to type and count it myself :) I thought it would just give me [0, 0, 0, 0, 0..........etc] but instead it taught me a new way of doing it :D
 var hereBombHere = [];    // this array is for where the bombs will be placed
 var bombSigns = [];       // this one takes care of the squares that will hold the hints
-
+var revealedTabs = 0;     // this will take care of the win condition
 document.getElementById("MineStart").onclick = setBombs;          // starts everything
 window.addEventListener('contextmenu', (ev) => {
     ev.preventDefault();                                           // this prevents the menu opening on right-click - Now I just have to figure out how to get it to do something else
@@ -75,51 +75,68 @@ function setBombs () {
               GameRun();
 }
 function GameRun(){                                                                     // moved this part into a function to prevent minefield being clicked pre-start
-document.getElementById("outerMine").addEventListener("click", function(event) {
-    if (event.target.classList.contains("MineCol")) {                                   
-        var butClick = event.target.id
-        console.log("clicked", butClick);
-       document.getElementById(butClick).style.color = "black";                         // sets a listener on all MineCol tiles (the playable ones) and reveals the bombHint when clicked.....
-       if(document.getElementById(butClick).textContent > 8){
-        console.log("dead");                                                            // ......or kills you
-        document.getElementById(butClick).textContent = "KABOOOOOOM";
-        document.getElementById(butClick).style.backgroundColor = "red";
-        document.getElementById("MineRestart").innerHTML = "You died. Click <span id='MineReload'>here</span> to try again"
-        document.getElementById("MineStart").disabled = true;                           // disabled the Start Button because restarting doesn't clear the fiels
-        document.getElementById("MineReload").addEventListener("click", GameReload);    
-        }    
-        var tileClear = gridPos.indexOf(butClick);
-        console.log("Here it is : ", tileClear);
-        if (bombHint[tileClear] === 0 && bombHint[tileClear - 1] === 0){                                // again, there has to be a neater way to do this 
-            document.getElementById(gridPos[tileClear -1]).style.color = "black";                       // any time a 0 is uncovered this reveals any adjacent zeroes
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear + 1] === 0){
-            document.getElementById(gridPos[tileClear +1]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear - 11] === 0){
-            document.getElementById(gridPos[tileClear -11]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear - 10] === 0){
-            document.getElementById(gridPos[tileClear -10]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear - 9] === 0){
-            document.getElementById(gridPos[tileClear -9]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear  + 9] === 0){
-            document.getElementById(gridPos[tileClear + 9]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear  + 10] === 0){
-            document.getElementById(gridPos[tileClear + 10]).style.color = "black";
-        }
-        if (bombHint[tileClear] === 0 && bombHint[tileClear  + 11] === 0){
-            document.getElementById(gridPos[tileClear + 11]).style.color = "black";
-        }
-    }
-});    
-}
 
-function GameReload(){                                                                   // refresh the page (will take this out once I figure out why my 'Clean the Field Loop isn't working)
-    location.reload();
+        document.getElementById("outerMine").addEventListener("click", function(event) {
+            if (event.target.classList.contains("MineCol")) {                                   
+                var butClick = event.target.id
+                console.log("clicked", butClick);
+               document.getElementById(butClick).style.color = "black";                         // sets a listener on all MineCol tiles (the playable ones) and reveals the bombHint when clicked.....
+               revealedTabs++;
+               if(document.getElementById(butClick).textContent > 8){
+                console.log("dead");                                                            // ......or kills you
+                document.getElementById(butClick).textContent = "KABOOOOOOM";
+                document.getElementById(butClick).style.backgroundColor = "red";
+                document.getElementById("MineRestart").innerHTML = "You died. Click <span id='MineReload'>here</span> to try again";
+                document.getElementById("MineStart").disabled = true;                           // disabled the Start Button because restarting doesn't clear the fiels
+                document.getElementById("MineReload").addEventListener("click", GameReload);    
+                }    
+                var tileClear = gridPos.indexOf(butClick);
+                console.log("Here it is : ", tileClear);
+                if (bombHint[tileClear] === 0 && bombHint[tileClear - 1] === 0){                                // again, there has to be a neater way to do this 
+                    document.getElementById(gridPos[tileClear -1]).style.color = "black";                       // any time a 0 is uncovered this reveals any adjacent zeroes
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear + 1] === 0){
+                    document.getElementById(gridPos[tileClear +1]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear - 11] === 0){
+                    document.getElementById(gridPos[tileClear -11]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear - 10] === 0){
+                    document.getElementById(gridPos[tileClear -10]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear - 9] === 0){
+                    document.getElementById(gridPos[tileClear -9]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear  + 9] === 0){
+                    document.getElementById(gridPos[tileClear + 9]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear  + 10] === 0){
+                    document.getElementById(gridPos[tileClear + 10]).style.color = "black";
+                    revealedTabs++;
+                }
+                if (bombHint[tileClear] === 0 && bombHint[tileClear  + 11] === 0){
+                    document.getElementById(gridPos[tileClear + 11]).style.color = "black";
+                    revealedTabs++;
+                }
+                console.log("Tiles Cleared : ", revealedTabs);
+                if (revealedTabs >= 92){
+                    document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
+                    for (i = 0;i < gridPos.length; i++){
+                        document.getElementById(gridPos[i]).style.color = "green";
+                    }
+                }
+            }
+        });    
+
+        function GameReload(){                                                                   // refresh the page (will take this out once I figure out why my 'Clean the Field Loop isn't working)
+        location.reload();
+        }
 }
 
 
