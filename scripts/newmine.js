@@ -82,13 +82,23 @@ function GameRun(){                                                             
         console.log("here : ", clicked);
         var bombMark = gridPos.indexOf(clicked);
         console.log("Please work = ", bombMark);
-        document.getElementById(clicked).style.backgroundColor = "aqua";
-        if (bombHint[bombMark] >= 9){
-            revealedTabs++;
+
+        if (document.getElementById(clicked).style.backgroundColor === "") {
+            if (bombHint[bombMark] > 8) {
+                console.log("Bing", bombHint[bombMark]);
+                document.getElementById(clicked).style.backgroundColor = "aqua";
+                revealedTabs++;
+            } else {
+                console.log("Bang");
+                document.getElementById(clicked).style.backgroundColor = "aqua";
+            }
+        } else if (document.getElementById(clicked).style.backgroundColor === "aqua" && bombHint[bombMark] > 8) {
+            console.log("Basta");
+            document.getElementById(clicked).style.backgroundColor = "";
+            revealedTabs--;
             console.log("This many : ", revealedTabs);
-        }else{
-            document.getElementById(clicked).style.backgroundColor = "aqua";
-            console.log("This many but you missed : ", revealedTabs);
+        } else {
+            document.getElementById(clicked).style.backgroundColor = "";
         }
     
       });
