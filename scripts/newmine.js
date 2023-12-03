@@ -139,7 +139,8 @@ function GameRun(){                                                             
                     document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
                     for (i = 0;i < gridPos.length; i++){
                         document.getElementById(gridPos[i]).style.color = "green";
-                        alert("You Win");
+                        document.getElementById("MineStart").disabled = true;                        
+                        document.getElementById("MineReload").addEventListener("click", GameReload);                       
                     }
                 }
             }
