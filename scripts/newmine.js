@@ -13,7 +13,7 @@ document.getElementById("MineStart").onclick = setBombs;          // starts ever
 function setBombs () {
 
     for (var i = 0; i < gridPos.length; i++ ){
-        document.getElementById(gridPos[i]).textContent = ""; 
+        document.getElementById(gridPos[i]).textContent = "";   
     }
 
     var bombReset = document.getElementsByClassName("MineCol");         // first off, reset the colours of everything 
@@ -70,70 +70,71 @@ function setBombs () {
 
  /*     for (var i = 0; i < gridPos.length; i++ ){
           document.getElementById(gridPos[i]).textContent = bombHint[i];        // ages spent trying to figure this out. Was chatting to E*** via WhatsApp and laid out the problem step by step and solved it by seeing it laid out - my original logic was trying too hard to find the relevant index - LESSON : ALWAYS BREAK PROBLEMS DOWN
-              } */
+              }                                                                    and now I don't even need it anymore as these were only needed during testing */
               GameRun();
 }
 function GameRun(){                                                                     // moved this part into a function to prevent minefield being clicked pre-start
 
     window.addEventListener('contextmenu', (ev) => {
         ev.preventDefault();                                           // this prevents the menu opening on right-click - Now I just have to figure out how to get it to do something else
-        console.log("right clicked",);
-        var clicked = ev.target.id;
-        console.log("here : ", clicked);
-        var bombMark = gridPos.indexOf(clicked);
-        console.log("Please work = ", bombMark);
+        console.log("right clicked",);                                 // had to take this step by step to make sure it was working. This is to confirm visually that rClick has happened
+        var clicked = ev.target.id;                                    // adds the id of the clicked square to a var
+        console.log("here : ", clicked);                               // and again let's me know that all is working up to here
+        var bombMark = gridPos.indexOf(clicked);                       // takes the id of clicked square (e.g. b6) and finds the index of this in gridPos
+        console.log("Please work = ", bombMark);                       // had my fingers crossed but it did indeed work 
 
-        if (document.getElementById(clicked).style.backgroundColor === "") {
-            if (bombHint[bombMark] > 8) {
-                console.log("Bing", bombHint[bombMark]);
-                document.getElementById(clicked).style.backgroundColor = "aqua";
-                revealedTabs++;
-            } else {
-                console.log("Bang");
-                document.getElementById(clicked).style.backgroundColor = "aqua";
+        if (document.getElementById(clicked).style.backgroundColor !== "aqua") {            // this part takes care of what happens on rClick. First off, check if the square is default colour
+            if (bombHint[bombMark] > 8) {                                               // and if there is a bomb. Other than in a very highly unlikely situation, a non-bomb square will never have more than 6 points
+                console.log("Bing", bombHint[bombMark]);                                // Bing, Bang and Basta added to the steps to ensure that the correct option was being encountered
+                document.getElementById(clicked).style.backgroundColor = "aqua";        // So, if it was default colour and has a bomb, the square changes colour and....
+                revealedTabs++;                                                         // ... 1 is added to the score for gameWin
+            } else {                                                                    // else (that is, if it is default colour but doesn't contain a bomb)
+                console.log("Bang");                                                    // let me know via console
+                document.getElementById(clicked).style.backgroundColor = "aqua";        // and change the colour
             }
-        } else if (document.getElementById(clicked).style.backgroundColor === "aqua" && bombHint[bombMark] > 8) {
-            console.log("Basta");
-            document.getElementById(clicked).style.backgroundColor = "";
-            revealedTabs--;
-            console.log("This many : ", revealedTabs);
+        } else if (document.getElementById(clicked).style.backgroundColor === "aqua" && bombHint[bombMark] > 8) { // else if (that is, if the colour of the square is not default (handled above) square is aqua and there is a bomb)
+                console.log("Basta");
+                document.getElementById(clicked).style.backgroundColor = "";                    // changes the colour back to default
+                revealedTabs--;                                                                 // and reduces that game score
+                console.log("This many : ", revealedTabs);
         } else {
-            document.getElementById(clicked).style.backgroundColor = "";
+            console.log(document.getElementById(clicked).style.backgroundColor)
+            document.getElementById(clicked).style.backgroundColor = "";                           // the only other possibility is aqua coloured and not containing a bomb
         }
     
       });
-        document.getElementById("outerMine").addEventListener("click", function(event) {
-            if (event.target.classList.contains("MineCol")) { 
+        document.getElementById("outerMine").addEventListener("click", function(event) {           // sets up a listener around the minefield
+            if (event.target.classList.contains("MineCol")) {                   
                 var butClick = event.target.id
-                var workDammit = gridPos.indexOf(butClick);
+                var workDammit = gridPos.indexOf(butClick);                                         // judging by variable names, I was either tired or getting frustrated at this point
                 document.getElementById(butClick).textContent = bombHint[workDammit];                                  
                 console.log("clicked", butClick);
                document.getElementById(butClick).style.color = "black";                         // sets a listener on all MineCol tiles (the playable ones) and reveals the bombHint when clicked.....
-
-               window.addEventListener("click",
+/*
+               window.addEventListener("click",                                                 // now that I have set up a rClick event, this is no longer needed. It does, however, correctly note a CtrlClick
                function(e) {
-                 if (e.ctrlKey) console.log("Shift, yay!");                                     // hopefully I'll be able to use this to add bomb guess markers
+                 if (e.ctrlKey) console.log("Ctrl, yay!");                                     // hopefully I'll be able to use this to add bomb guess markers
                },
-               false);
+               false);  */
                if(document.getElementById(butClick).textContent > 8){
                 console.log("dead");                                                            // ......or kills you
                 document.getElementById(butClick).textContent = "KABOOOOOOM";
                 for(i = 0; i < hereBombHere.length; i++){
-                    document.getElementById(gridPos[hereBombHere[i]]).style.backgroundColor = "red";
+                    document.getElementById(gridPos[hereBombHere[i]]).style.backgroundColor = "red";   // changes all the bombs to red. Might see if I can make this fancier - some animation, maybe?
                 }
   
                 document.getElementById("MineRestart").innerHTML = "You died. Click <span id='MineReload'>here</span> to try again";
-                document.getElementById("MineStart").disabled = true;                           // disabled the Start Button because restarting doesn't clear the fiels
-                document.getElementById("MineReload").addEventListener("click", GameReload);    
+                document.getElementById("MineStart").disabled = true;                           // disabled the Start Button because restarting doesn't clear the fields
+                document.getElementById("MineReload").addEventListener("click", GameReload);    // and placed an alternative button for restarting
                 }    
-                var tileClear = gridPos.indexOf(butClick);
-                console.log("Here it is : ", tileClear);
+                var tileClear = gridPos.indexOf(butClick);                                      // seeming as you're not 'dead'; all this is to take care of what happens next
+                console.log("Here it is : ", tileClear);                                        // usual check to make sure the gridPos is correctly identified
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 1] === 0){                                // again, there has to be a neater way to do this 
                     document.getElementById(gridPos[tileClear -1]).textContent = "0";
                     document.getElementById(gridPos[tileClear -1]).style.color = "black";
                 }
-                if (bombHint[tileClear] === 0 && bombHint[tileClear + 1] === 0){
-                    document.getElementById(gridPos[tileClear +1]).textContent = "0";
+                if (bombHint[tileClear] === 0 && bombHint[tileClear + 1] === 0){                // All of this is to check if, on pressing a square with a value of 0......
+                    document.getElementById(gridPos[tileClear +1]).textContent = "0";           // ...it checks all adjacent squares and if they have a value of 0, reveals them
                     document.getElementById(gridPos[tileClear +1]).style.color = "black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 11] === 0){
@@ -160,14 +161,14 @@ function GameRun(){                                                             
                     document.getElementById(gridPos[tileClear + 11]).textContent = "0";
                     document.getElementById(gridPos[tileClear + 11]).style.color = "black";
                 }
-                console.log("Tiles Cleared : ", revealedTabs);
-                if (revealedTabs >= 8){
+                console.log("Tiles Cleared : ", revealedTabs);                                  // this is a remnant of when I originally set gameWin situation by amount of squares successfully cleared 
+                if (revealedTabs >= 8){                                                         // (obviously, win by bombs correctly identified is far better)
                     document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
                     for (i = 0;i < gridPos.length; i++){
-                        document.getElementById(gridPos[i]).style.color = "green";
+                        document.getElementById(gridPos[i]).style.color = "green";              // make everything green. Again, maybe some animation here?
                         document.getElementById(gridPos[i]).style.backgroundColor = "green";
-                        document.getElementById("MineStart").disabled = true;                        
-                        document.getElementById("MineReload").addEventListener("click", GameReload);                       
+                        document.getElementById("MineStart").disabled = true;                        // disable the startbutton again
+                        document.getElementById("MineReload").addEventListener("click", GameReload); // and activates the other restart button
                     }
                 }
             }
@@ -181,9 +182,11 @@ function GameRun(){                                                             
 
 });
 // NEXT STEPS
+// maybe some animation on win or lose
+
 // find a way to auto-empty logically empty squares (Done :)
-// add win condition  (almost)
-// add bomb marker by right click (line 89)
+// add win condition  (Done :)
+// add bomb marker by right click (Done :)
 
 
        
