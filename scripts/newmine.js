@@ -87,12 +87,12 @@ function GameRun(){                                                             
             if (bombHint[bombMark] > 8) {                                               // and if there is a bomb. Other than in a very highly unlikely situation, a non-bomb square will never have more than 6 points
                 console.log("Bing", bombHint[bombMark]);                                // Bing, Bang and Basta added to the steps to ensure that the correct option was being encountered
                 document.getElementById(clicked).style.backgroundColor = "aqua";        // So, if it was default colour and has a bomb, the square changes colour and....
-                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px red"; 
+                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px black"; 
                 revealedTabs++;                                                         // ... 1 is added to the score for gameWin
             } else {                                                                    // else (that is, if it is default colour but doesn't contain a bomb)
                 console.log("Bang");                                                    // let me know via console
                 document.getElementById(clicked).style.backgroundColor = "aqua";        // and change the colour
-                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px red";
+                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px black";
             }
         } else if (document.getElementById(clicked).style.backgroundColor === "aqua" && bombHint[bombMark] > 8) { // else if (that is, if the colour of the square is not default (handled above) square is aqua and there is a bomb)
                 console.log("Basta");
@@ -114,7 +114,7 @@ function GameRun(){                                                             
                 document.getElementById(butClick).textContent = bombHint[workDammit];                                  
                 console.log("clicked", butClick);
                document.getElementById(butClick).style.color = "black";                         // sets a listener on all MineCol tiles (the playable ones) and reveals the bombHint when clicked.....
-               document.getElementById(butClick).style.boxShadow = "inset 2px 2px 2px red";
+               document.getElementById(butClick).style.boxShadow = "inset 2px 2px 2px black";
 /*
                window.addEventListener("click",                                                 // now that I have set up a rClick event, this is no longer needed. It does, however, correctly note a CtrlClick
                function(e) {
@@ -137,34 +137,42 @@ function GameRun(){                                                             
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 1] === 0){                                // again, there has to be a neater way to do this 
                     document.getElementById(gridPos[tileClear -1]).textContent = "0";
                     document.getElementById(gridPos[tileClear -1]).style.color = "black";
+                    document.getElementById(gridPos[tileClear -1]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear + 1] === 0){                // All of this is to check if, on pressing a square with a value of 0......
                     document.getElementById(gridPos[tileClear +1]).textContent = "0";           // ...it checks all adjacent squares and if they have a value of 0, reveals them
                     document.getElementById(gridPos[tileClear +1]).style.color = "black";
+                    document.getElementById(gridPos[tileClear +1]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 11] === 0){
                     document.getElementById(gridPos[tileClear -11]).textContent = "0";
                     document.getElementById(gridPos[tileClear -11]).style.color = "black";
+                    document.getElementById(gridPos[tileClear -11]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 10] === 0){
                     document.getElementById(gridPos[tileClear -10]).textContent = "0";
                     document.getElementById(gridPos[tileClear -10]).style.color = "black";
+                    document.getElementById(gridPos[tileClear -10]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear - 9] === 0){
                     document.getElementById(gridPos[tileClear -9]).textContent = "0";
                     document.getElementById(gridPos[tileClear -9]).style.color = "black";
+                    document.getElementById(gridPos[tileClear -9]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear  + 9] === 0){
                     document.getElementById(gridPos[tileClear + 9]).textContent = "0";
                     document.getElementById(gridPos[tileClear + 9]).style.color = "black";
+                    document.getElementById(gridPos[tileClear + 9]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear  + 10] === 0){
                     document.getElementById(gridPos[tileClear + 10]).textContent = "0";
                     document.getElementById(gridPos[tileClear + 10]).style.color = "black";
+                    document.getElementById(gridPos[tileClear + 10]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 if (bombHint[tileClear] === 0 && bombHint[tileClear  + 11] === 0){
                     document.getElementById(gridPos[tileClear + 11]).textContent = "0";
                     document.getElementById(gridPos[tileClear + 11]).style.color = "black";
+                    document.getElementById(gridPos[tileClear + 11]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 console.log("Tiles Cleared : ", revealedTabs);                                  // this is a remnant of when I originally set gameWin situation by amount of squares successfully cleared 
                 if (revealedTabs >= numberBombs){                                                         // (obviously, win by bombs correctly identified is far better)
