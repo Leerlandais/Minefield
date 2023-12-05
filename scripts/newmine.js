@@ -6,7 +6,7 @@ var hereBombHere = [];    // this array is for where the bombs will be placed
 var bombSigns = [];       // this one takes care of the squares that will hold the hints
 var revealedTabs = 0;     // this will take care of the win condition
 document.getElementById("MineStart").onclick = setBombs;          // starts everything
-
+const numberBombs = 12;
 
 
 
@@ -25,7 +25,7 @@ function setBombs () {
 
      const hasBomb = new Set();                                   // this one took a while to figure out. My older code was producing non-unique positions. Lots of digging unearthed 'new Set()' which I need to look into more cos I don't really understand it but it works 
      const notHere = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 10, 20, 30, 40, 50, 60, 70, 80, 19, 29, 39, 49, 59, 69, 79, 89]); // sloppy but this is a list of numbers I don't want (the outer edges of the grid)
-     while (hasBomb.size < 8){
+     while (hasBomb.size < numberBombs){
        const bombHere = Math.floor(Math.random() * 100);          // selects a random number. Needs a 10*10 grid to handle logic yet to be added (which will determine the Hints)
        if (!hasBomb.has(bombHere) && !notHere.has(bombHere)){     // checks that bombHere does NOT belong to either set 
        hasBomb.add(bombHere);                                     // having verified that it's a unique addition and not in the refused number list, it sticks it into the array
@@ -87,19 +87,23 @@ function GameRun(){                                                             
             if (bombHint[bombMark] > 8) {                                               // and if there is a bomb. Other than in a very highly unlikely situation, a non-bomb square will never have more than 6 points
                 console.log("Bing", bombHint[bombMark]);                                // Bing, Bang and Basta added to the steps to ensure that the correct option was being encountered
                 document.getElementById(clicked).style.backgroundColor = "aqua";        // So, if it was default colour and has a bomb, the square changes colour and....
+                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px red"; 
                 revealedTabs++;                                                         // ... 1 is added to the score for gameWin
             } else {                                                                    // else (that is, if it is default colour but doesn't contain a bomb)
                 console.log("Bang");                                                    // let me know via console
                 document.getElementById(clicked).style.backgroundColor = "aqua";        // and change the colour
+                document.getElementById(clicked).style.boxShadow = "inset 2px 2px 2px red";
             }
         } else if (document.getElementById(clicked).style.backgroundColor === "aqua" && bombHint[bombMark] > 8) { // else if (that is, if the colour of the square is not default (handled above) square is aqua and there is a bomb)
                 console.log("Basta");
                 document.getElementById(clicked).style.backgroundColor = "";                    // changes the colour back to default
+                document.getElementById(clicked).style.boxShadow = "";
                 revealedTabs--;                                                                 // and reduces that game score
                 console.log("This many : ", revealedTabs);
         } else {
             console.log(document.getElementById(clicked).style.backgroundColor)
             document.getElementById(clicked).style.backgroundColor = "";                           // the only other possibility is aqua coloured and not containing a bomb
+            document.getElementById(clicked).style.boxShadow = "";
         }
     
       });
@@ -110,6 +114,7 @@ function GameRun(){                                                             
                 document.getElementById(butClick).textContent = bombHint[workDammit];                                  
                 console.log("clicked", butClick);
                document.getElementById(butClick).style.color = "black";                         // sets a listener on all MineCol tiles (the playable ones) and reveals the bombHint when clicked.....
+               document.getElementById(butClick).style.boxShadow = "inset 2px 2px 2px red";
 /*
                window.addEventListener("click",                                                 // now that I have set up a rClick event, this is no longer needed. It does, however, correctly note a CtrlClick
                function(e) {
@@ -162,7 +167,7 @@ function GameRun(){                                                             
                     document.getElementById(gridPos[tileClear + 11]).style.color = "black";
                 }
                 console.log("Tiles Cleared : ", revealedTabs);                                  // this is a remnant of when I originally set gameWin situation by amount of squares successfully cleared 
-                if (revealedTabs >= 8){                                                         // (obviously, win by bombs correctly identified is far better)
+                if (revealedTabs >= numberBombs){                                                         // (obviously, win by bombs correctly identified is far better)
                     document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
                     for (i = 0;i < gridPos.length; i++){
                         document.getElementById(gridPos[i]).style.color = "green";              // make everything green. Again, maybe some animation here?
