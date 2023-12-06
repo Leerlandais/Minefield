@@ -6,7 +6,7 @@ var hereBombHere = [];    // this array is for where the bombs will be placed
 var bombSigns = [];       // this one takes care of the squares that will hold the hints
 var revealedTabs = 0;     // this will take care of the win condition
 document.getElementById("MineStart").onclick = setBombs;          // starts everything
-const numberBombs = 12;
+const numberBombs = 10;     // Change this to adjust amount of bombs placed (also adjusts the win condition)
 
 
 
@@ -175,15 +175,28 @@ function GameRun(){                                                             
                     document.getElementById(gridPos[tileClear + 11]).style.boxShadow = "inset 2px 2px 2px black";
                 }
                 console.log("Tiles Cleared : ", revealedTabs);                                  // this is a remnant of when I originally set gameWin situation by amount of squares successfully cleared 
-                if (revealedTabs >= numberBombs){                                                         // (obviously, win by bombs correctly identified is far better)
+                if (revealedTabs >= numberBombs) {
                     document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
-                    for (i = 0;i < gridPos.length; i++){
-                        document.getElementById(gridPos[i]).style.color = "green";              // make everything green. Again, maybe some animation here?
-                        document.getElementById(gridPos[i]).style.backgroundColor = "green";
-                        document.getElementById("MineStart").disabled = true;                        // disable the startbutton again
-                        document.getElementById("MineReload").addEventListener("click", GameReload); // and activates the other restart button
+                  
+                    let i = 0;
+                    function goGreen() {
+                        if (i < gridPos.length) {
+                            setTimeout(() => {
+                                document.getElementById(gridPos[i]).style.color = "green";
+                                document.getElementById(gridPos[i]).style.backgroundColor = "green";
+                                i++;
+                                goGreen();
+                            }, 10);
+                        }
+                        
                     }
-                }
+                  
+                    goGreen();
+                  
+                    document.getElementById("MineStart").disabled = true;
+                    document.getElementById("MineReload").addEventListener("click", GameReload);
+                  }
+
             }
         });    
 
@@ -203,3 +216,16 @@ function GameRun(){                                                             
 
 
        
+/*
+
+  if (revealedTabs >= numberBombs){                                                         // (obviously, win by bombs correctly identified is far better)
+    document.getElementById("MineRestart").innerHTML = "You WIN!!! Click <span id='MineReload'>here</span> to play again";
+    for (i = 0;i < gridPos.length; i++){
+        document.getElementById(gridPos[i]).style.color = "green";              // make everything green. Again, maybe some animation here?
+        document.getElementById(gridPos[i]).style.backgroundColor = "green";
+        document.getElementById("MineStart").disabled = true;                        // disable the startbutton again
+        document.getElementById("MineReload").addEventListener("click", GameReload); // and activates the other restart button
+    }
+}
+
+*/
