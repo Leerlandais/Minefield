@@ -1,0 +1,47 @@
+body {
+    background-color: #f4d292;
+}
+
+h1 {
+    text-align: center;
+    font-family: cursive;
+    font-size: 3em;
+}
+
+#diffHead {
+    width: 40%;
+    margin: 0 auto;
+}
+
+h2 {
+    display: inline-block;
+    color: seagreen;
+    padding-left: 15%;
+}
+
+#makeGridHere {
+    float: left;
+    margin-top: 7%;
+    margin-left: 42%;
+    width: 440px;
+}
+
+.mineSquare {
+    text-align: center;
+    padding-top: 20px;
+    margin: 0 auto;
+    float: left;
+    border: 1px solid;
+    width: 40px;
+    height: 30px;
+}
+
+#mineOver{
+    clear: left;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#MineReload{
+    color: aqua;
+}
